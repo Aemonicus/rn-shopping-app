@@ -21,17 +21,17 @@ export default (state = initialState, action) => {
         // already have the item in the cart
         updatedOrNewCartItem = new CartItem(
           state.items[addedProduct.id].quantity + 1,
-          productPrice,
-          productTitle,
-          state.items[addedProduct.id].sum + productPrice
+          prodPrice,
+          prodTitle,
+          state.items[addedProduct.id].sum + prodPrice
         )
       } else {
-        updatedOrNewCartItem = new CartItem(1, productPrice, productTitle, productPrice)
-        return {
-          ...state,
-          items: { ...state.items, [addedProduct.id]: updatedOrNewCartItem },
-          totalAmount: state.totalAmount + productPrice
-        }
+        updatedOrNewCartItem = new CartItem(1, prodPrice, prodTitle, prodPrice)
+      }
+      return {
+        ...state,
+        items: { ...state.items, [addedProduct.id]: updatedOrNewCartItem },
+        totalAmount: state.totalAmount + prodPrice
       }
   }
 
