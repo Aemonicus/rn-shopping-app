@@ -32,6 +32,11 @@
     ... 
 
     // On récupère les reducers
+    // !!!! ATTENTION !!!! : la clé "meals" sera utilisé à chaque fois que l'on appellera le state avec useSelector. 
+    // Par exemple avec le initialState au-dessus:
+    // const item = useSelector(state.meals.filteredMeals)
+    // C'est comme si on avait un péage entre le useSelector (hook qui permet d'aller chercher une data dans le state) et l'accès au state quand on passe par un combineReducers
+
     const rootReducer = combineReducers({
       meals: mealsReducer
     })
