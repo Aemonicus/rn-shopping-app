@@ -1,12 +1,17 @@
 import React from 'react'
 import { FlatList, Text } from "react-native"
-// Hook permettant d'aller chercher dans le state
-import { useSelector } from "react-redux"
+// useSelector = Hook permettant d'aller chercher dans le state
+// useDispatch = Hook permettant de déclencher l'action pour l'envoyer au reducer et modifier le state
+import { useSelector, useDispatch } from "react-redux"
 
 import ProductItem from "../../components/shop/ProductItem"
+import * as cartActions from "../../store/actions/cart"
 
 const ProductsOverviewScreen = ({ navigation }) => {
   const products = useSelector(state => state.products.availableProducts)
+
+  const dispatch = useDispatch()
+
   return (
     <FlatList
       data={products}
@@ -24,7 +29,9 @@ const ProductsOverviewScreen = ({ navigation }) => {
               productTitle: itemData.item.title
             })
           }}
-          onAddToCart={() => { }}
+          onAddToCart={() => {
+            dispatch(cartActions.addToCart(itemData.iem))
+          }}
         />} />
   )
 }
