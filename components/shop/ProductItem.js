@@ -13,6 +13,7 @@ const ProductItem = ({ image, title, price, onViewDetail, onAddToCart }) => {
   if (Platform.OS === "android" && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback
   }
+
   return (
     <View style={styles.products}>
       <View style={styles.touchable}>
