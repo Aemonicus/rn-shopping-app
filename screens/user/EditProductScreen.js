@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView, Platform } from "react-native"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 
 import { HeaderButtons, Item } from "react-navigation-header-buttons"
 import HeaderButton from "../../components/UI/HeaderButton"
+import * as productsActions from "../../store/actions/products"
 
 const EditProductScreen = ({ navigation }) => {
 
@@ -11,6 +12,7 @@ const EditProductScreen = ({ navigation }) => {
 
   const editedProduct = useSelector(state => state.products.userProducts.find(item => item.id === prodId))
 
+  const dispatch = useDispatch()
 
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : "")
   const [imageUrl, setImageUrl] = useState(editedProduct ? editedProduct.imageUrl : "")
@@ -18,8 +20,12 @@ const EditProductScreen = ({ navigation }) => {
   const [description, setDescription] = useState(editedProduct ? editedProduct.description : "")
 
   const submitHandler = useCallback(() => {
-    console.log("submit!")
-  }, [])
+    if (editedProduct) {
+      dispatch(productsActions.updateProduct(prodId, title, description, imageUrl))
+    } else {
+      dispatch(productsActions.createProduct(title, description, imageUrl, +price))
+    }
+  }, [dispatch, prodId, title, description, imageUrl, price])
 
   useEffect(() => {
     navigation.setParams({ submit: submitHandler })
