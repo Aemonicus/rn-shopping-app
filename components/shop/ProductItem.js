@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, Button, TouchableOpacity, TouchableNativ
 
 import Colors from "../../constants/Colors"
 
-const ProductItem = ({ image, title, price, onViewDetail, onAddToCart }) => {
+const ProductItem = ({ image, title, price, onSelect, children }) => {
 
   // On utilise TouchableOpacity pour rendre tout l'élément clickable et pas seulement le bouton 
   // Pour rendre plus classe sur android on passera par TouchableNativeFeedback et Plateform pour tester qu'on est bien sur android
@@ -17,7 +17,7 @@ const ProductItem = ({ image, title, price, onViewDetail, onAddToCart }) => {
   return (
     <View style={styles.products}>
       <View style={styles.touchable}>
-        <TouchableCmp onPress={onViewDetail} useForeground>
+        <TouchableCmp onPress={onSelect} useForeground>
           <View style={styles.imageContainer}>
             <Image style={styles.image} source={{ uri: image }} />
           </View>
@@ -26,8 +26,7 @@ const ProductItem = ({ image, title, price, onViewDetail, onAddToCart }) => {
             <Text style={styles.price}>{price.toFixed(2)}</Text>
           </View>
           <View style={styles.actions}>
-            <Button color={Colors.primary} title="View Details" onPress={onViewDetail} />
-            <Button color={Colors.primary} title="To Cart" onPress={onAddToCart} />
+            {children}
           </View>
         </TouchableCmp>
       </View>
