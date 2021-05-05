@@ -84,55 +84,70 @@ const EditProductScreen = ({ navigation }) => {
     navigation.setParams({ submit: submitHandler })
   }, [submitHandler])
 
-  const textChangeHandler = (inputIdentifier, text) => {
-    let isValid = false
-    if (text.trim().length > 0) {
-      isValid = true
-    }
+  const inputChangeHandler = useCallback((inputIdentifier, inputValue, inputValidity) => {
     dispatchFormState({
       type: FORM_INPUT_UPDATE,
-      value: text,
-      isValid: isValid,
+      value: inputValue,
+      isValid: inputValidity,
       input: inputIdentifier
     })
-  }
+  }, [dispatchFormState])
 
   return (
     <ScrollView>
       <View style={styles.form}>
         <Input
+          id="title"
           label="Title"
           keyboardType="default"
           errorText="Please enter a valid title!"
           autoCapitalize="sentences"
           // Controle uniquement l'apparence du bouton, pas sa fonctionnalité
           returnKeyType="next"
+          onInputChange={inputChangeHandler}
+          initialValue={editedProduct ? editedProduct.title : ""}
+          initiallyValid={!!editedProduct}
+          required
         />
         <Input
+          id="imageUrl"
           label="Image URl"
           keyboardType="default"
           errorText="Please enter a valid image url!"
           // Controle uniquement l'apparence du bouton, pas sa fonctionnalité
           returnKeyType="next"
+          onInputChange={inputChangeHandler}
+          initialValue={editedProduct ? editedProduct.imageUrl : ""}
+          initiallyValid={!!editedProduct}
+          required
         />
         {editedProduct ? null : (
           <Input
+            id="price"
             label="Price"
             keyboardType="decimal-pad"
             errorText="Please enter a valid price!"
             // Controle uniquement l'apparence du bouton, pas sa fonctionnalité
             returnKeyType="next"
+            onInputChange={inputChangeHandler}
+            required
+            min={0}
           />
         )
         }
         <Input
+          id="description"
           label="Description"
           keyboardType="default"
           autoCapitalize="sentences"
           errorText="Please enter a valid description!"
-          // Controle uniquement l'apparence du bouton, pas sa fonctionnalité
           multiline
           numberOfLines={3}
+          onInputChange={inputChangeHandler}
+          initialValue={editedProduct ? editedProduct.description : ""}
+          initiallyValid={!!editedProduct}
+          required
+          minLength={5}
         />
       </View>
     </ScrollView>
