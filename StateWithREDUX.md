@@ -1,5 +1,12 @@
 # Reducers
 
+!!!! ATTENTION !!!! 
+
+Ne pas confondre le reducer de Redux avec le Hook useReducer de React
+Voir `EditProductScreen.js` pour un exemple concret du Hook useReducer utilisé dans le form pour relier state et action
+
+!!!! ATTENTION !!!! 
+
   Le reducers n'est au final rien d'autre qu'une fonction qui renvoie un nouveau state. Il prend en argument le state (ancien et nouveau si besoin) et une action (qui définit le type d'action recherchée).
 
   On va d'abord définir un initialState, le state de départ de l'application.

@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback, useReducer } from 'react'
+import React, { useEffect, useCallback, useReducer } from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView, Platform, Alert } from "react-native"
 import { useSelector, useDispatch } from "react-redux"
 
 import { HeaderButtons, Item } from "react-navigation-header-buttons"
 import HeaderButton from "../../components/UI/HeaderButton"
 import * as productsActions from "../../store/actions/products"
+import Input from "../../components/UI/Input"
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE"
 
@@ -99,47 +100,40 @@ const EditProductScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.form}>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Title</Text>
-          <TextInput
-            style={styles.input}
-            value={formState.inputValues.title}
-            onChangeText={textChangeHandler.bind(this, "title")}
-            keyboardType="default"
-            autoCapitalize="sentences"
+        <Input
+          label="Title"
+          keyboardType="default"
+          errorText="Please enter a valid title!"
+          autoCapitalize="sentences"
+          // Controle uniquement l'apparence du bouton, pas sa fonctionnalité
+          returnKeyType="next"
+        />
+        <Input
+          label="Image URl"
+          keyboardType="default"
+          errorText="Please enter a valid image url!"
+          // Controle uniquement l'apparence du bouton, pas sa fonctionnalité
+          returnKeyType="next"
+        />
+        {editedProduct ? null : (
+          <Input
+            label="Price"
+            keyboardType="decimal-pad"
+            errorText="Please enter a valid price!"
             // Controle uniquement l'apparence du bouton, pas sa fonctionnalité
             returnKeyType="next"
           />
-          {!formState.inputValidities.title && <Text>Please enter a valid title!</Text>}
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Image URL</Text>
-          <TextInput
-            style={styles.input}
-            value={formState.inputValues.imageUrl}
-            onChangeText={textChangeHandler.bind(this, "imageUrl")}
-          />
-        </View>
-        {editedProduct ? null : (
-          <View style={styles.formControl}>
-            <Text style={styles.label}>Price</Text>
-            <TextInput
-              style={styles.input}
-              value={formState.inputValues.price}
-              onChangeText={textChangeHandler.bind(this, "price")}
-              keyboardType="decimal-pad"
-            />
-          </View>
         )
         }
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Description</Text>
-          <TextInput
-            style={styles.input}
-            value={formState.inputValues.description}
-            onChangeText={textChangeHandler.bind(this, "description")}
-          />
-        </View>
+        <Input
+          label="Description"
+          keyboardType="default"
+          autoCapitalize="sentences"
+          errorText="Please enter a valid description!"
+          // Controle uniquement l'apparence du bouton, pas sa fonctionnalité
+          multiline
+          numberOfLines={3}
+        />
       </View>
     </ScrollView>
   )
@@ -162,19 +156,6 @@ EditProductScreen.navigationOptions = navData => {
 const styles = StyleSheet.create({
   form: {
     margin: 20
-  },
-  formControl: {
-    width: "100%",
-  },
-  label: {
-    fontFamily: "open-sans-bold",
-    marginVertical: 8
-  },
-  input: {
-    paddingHorizontal: 2,
-    paddingVertical: 5,
-    borderBottomColor: "#ccc",
-    borderBottomWidth: 1
   }
 })
 
